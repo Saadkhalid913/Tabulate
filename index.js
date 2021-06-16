@@ -18,7 +18,7 @@ const postRouter = require("./server/api/routes/posts")
 const app = express()
 
 app.use(express.json())
-upp.use(upload())
+app.use(upload())
 
 app.use("/users", userRouter)
 app.use("/posts", postRouter)

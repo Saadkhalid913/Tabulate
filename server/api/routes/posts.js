@@ -5,6 +5,7 @@ const _ = require("lodash")
 const jwt = require("jsonwebtoken")
 const config = require("config")
 const auth = require("../middlewear/auth-user")
+const path = require("path")
 
 
 // schemas 
@@ -17,7 +18,9 @@ router.post("/upload", auth, async (req, res) => {
   const author = [req._user._id];
   const title = req.body.post.title;
 
+
   if (!title) return res.status(400).send({ error: "No title provided" })
+
 
   const post = new postModel({ title, author })
   console.log(post)
@@ -42,14 +45,15 @@ router.put("/:id", auth, async (req, res) => {
   const title = req.body.post.title
   const tags = req.body.post.tags
 
+
+  // checking if post id is valid and also checking if post exists 
   if (!post_id) return res.status(301).send({ error: "No Id provided" })
   const post = await postModel.findById(post_id)
   if (!post) return res.send({ error: "Invalid Id" })
 
+  // checking if user is one of the authors 
   if (!post.author.includes(user_id)) return res.status(301).send({ err: "User not authorized" })
 
-  console.log(title, tags)
-  console.log("__________________________________________________________________________")
 
   try {
     const response = await postModel.findByIdAndUpdate(post_id, { title, tags })
@@ -59,6 +63,40 @@ router.put("/:id", auth, async (req, res) => {
     console.log(err)
     res.status(400).send({ error: "Server-side error", log: err })
   }
+})
+
+router.post("/uploadfiles/:id", async (req, res) => {
+  assetPaths = []
+  let files = req.files.File;
+
+  console.log("Files:", files);
+  const assetsDir = path.join(__dirname, "../", "../", "/assets/")
+  for (let file of files) {
+    filePath = assetsDir + file.name;
+    try {
+      file.mv(filePath)
+      assetPaths.push(filePath)
+    }
+    catch (err) {
+      res.status(501).send({ error: "Serverside Error", log: err })
+    }
+  }
+
+  console.log("Assets: -------   ", assetPaths)
+
+  const id = req.params.id
+  if (!id) return res.status(300).send({ error: "no id provided" });
+  const post = await postModel.findById(id);
+  if (!post) return res.status(300).send({ error: "no post by that id" });
+  post.files = assetPaths;
+  try {
+    const response = await post.save();
+    return res.send(response);
+  }
+  catch (err) {
+    return res.status(500).send({ err: "Serverside error", log: err })
+  }
+
 })
 
 
