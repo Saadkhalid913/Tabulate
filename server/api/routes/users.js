@@ -5,12 +5,9 @@ const _ = require("lodash")
 const userModel = require("../models/models").userModel
 const jwt = require("jsonwebtoken")
 const config = require("config")
-
-
+const auth = require("../middlewear/auth-user")
 
 const router = express.Router()
-
-
 
 router.post("/signup", async (req, res) => {
   const first_name = req.body.first_name
@@ -36,14 +33,22 @@ router.post("/login", async (req, res) => {
 
   const user = await userModel.findOne({ email: email })
 
-
-  if (!user) return res.status(400).send("No such user")
+  if (!user) return res.status(400).send({ error: "No such user" })
 
   const valid = await bcrypt.compare(password, user.password)
 
-  if (!valid) return res.status(400).send("Invalid login")
+  if (!valid) return res.status(400).send({ error: "Invalid login" })
 
   if (valid) return res.status(200).send({ ..._.pick(user, ["_id", "email"]), "auth-token": user.generateAuthToken() })
 })
+
+
+router.post("/me", auth, async (req, res) => {
+  const id = req._user._id
+  const user = await userModel.findById(id);
+  return res.send(_.pick(user, ["email", "first_name", "last_name", "posts"]))
+})
+
+
 
 module.exports = router

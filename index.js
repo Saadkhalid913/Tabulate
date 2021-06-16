@@ -12,12 +12,14 @@ require("./startup/env")()
 //routers 
 
 const userRouter = require("./server/api/routes/users")
+const postRouter = require("./server/api/routes/posts")
 
 const app = express()
 
 app.use(express.json())
 
 app.use("/users", userRouter)
+app.use("/posts", postRouter)
 
 
 
