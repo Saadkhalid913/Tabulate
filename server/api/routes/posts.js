@@ -23,7 +23,7 @@ router.post("/upload", auth, async (req, res) => {
 
 
   const post = new postModel({ title, author })
-  console.log(post)
+
   try {
     const response = await post.save()
     res.send(response)
@@ -60,7 +60,7 @@ router.put("/:id", auth, async (req, res) => {
     res.send(response)
   }
   catch (err) {
-    console.log(err)
+
     res.status(400).send({ error: "Server-side error", log: err })
   }
 })
@@ -90,24 +90,27 @@ router.post("/uploadfiles/:id", auth, async (req, res) => {
 
   if (!id) return res.status(300).send({ error: "no id provided" });
   const post = await postModel.findById(id);
-  if (!post) return res.status(300).send({ error: "no post by that id" });
+  // if (!post) return res.status(300).send({ error: "no post by that id" });
+  if (!post) return res.redirect("/posts/error/" + 1234);
   post.files = assetPaths;
   id = post._id
 
   try {
     const response = await post.save();
     const user = await userModel.findById(req._user._id);
+    if (!user) console.log("No user")
     user.posts.push(id)
-    await user.save()
-    return res.send(_.pick(response, ["_id", "author", "title"]));
+    console.log(await user.save())
 
+    return res.send(_.pick(response, ["_id", "author", "title"]));
   }
   catch (err) {
     return res.status(500).send({ err: "Serverside error", log: err })
   }
-
-
 })
+
+router.get("/error/:id",(req,res) => res.send({id: req.params.id}))
+
 
 
 

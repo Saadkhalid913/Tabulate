@@ -18,6 +18,8 @@
 <script>
 
   document.getElementById("upload-button").addEventListener("click", async () => {
+
+    // fetch("http://localhost:3000/posts/red")
     const fileBox = document.getElementById("file-box");
     const file = fileBox.files;
     
@@ -25,15 +27,14 @@
     form.append("File0", file[0])
     form.append("File1", file[1])
     form.append("File2", file[2])
-    form.append("user_auth_token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGNhNWYwNmQzODgzNjFlYTA3YjQ3MzIiLCJpYXQiOjE2MjM4ODk4MzF9.q5qqs1o2XtVztVZXkLNyPEFr5GbWhfnx9xdWprRTCT0")
-    const response = await fetch("http://localhost:3000/posts/uploadfiles/60ca97ecb4649830e40ddc79", {
+    form.append("user_auth_token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGNhYTdjYWNjZGNkZDBlM2EzYzYzZjYiLCJpYXQiOjE2MjM4OTU4MTN9.lEzKVzJ5slJu0N9ATwk9BenZKaZxs1HwSLD88dfRnRs")
+    const response = await fetch("http://localhost:3000/posts/uploadfiles/60caa875ccdcdd0e3a3c63f7", {
       method: "POST",
       mode:"cors",
       body: form
     })
-
-    console.log(await response.json())
-
+    console.log(await response)
+    // window.location = response.url
   })
 
 
