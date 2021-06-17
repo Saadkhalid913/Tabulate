@@ -68,7 +68,12 @@ router.put("/:id", auth, async (req, res) => {
 router.post("/uploadfiles/:id", auth, async (req, res) => {
   if (!req.files) return res.status(400).send({ error: "No files provided" });
   assetPaths = []
-  let files = [req.files.File0, req.files.File1, req.files.File2];
+  let files = [];
+
+  for (let f in req.files) {
+    files.push(req.files[f])
+  }
+  console.log("Files -------- ", files)
 
   // if (!Array.isArray(files)) files = [files]
 
@@ -90,8 +95,8 @@ router.post("/uploadfiles/:id", auth, async (req, res) => {
 
   if (!id) return res.status(300).send({ error: "no id provided" });
   const post = await postModel.findById(id);
-  // if (!post) return res.status(300).send({ error: "no post by that id" });
-  if (!post) return res.redirect("/posts/error/" + 1234);
+  if (!post) return res.status(300).send({ error: "no post by that id" });
+  // if (!post) return res.redirect("/posts/error/" + 1234);
   post.files = assetPaths;
   id = post._id
 

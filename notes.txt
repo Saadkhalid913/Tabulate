@@ -1,0 +1,14 @@
+// the glich with page reload is still prevelant, however I can use redirects to make the site still work out. I also need to implement better 
+// verification for my json files 
+
+// also need to implement GET routes for posts 
+
+// Thinking of postponing other models and simply adding a subject tag to the post model for the time being
+
+
+// FRONTEND PLANS 
+
+Homepage.htmk => sign up && login => add post && view post 
+
+after adding post, there will be a prompt to add files to post. This will later redirect in a new window to a confirmation or 
+error page. THIS IS ONLY NEEDED FOR ROUTES WITH FILE UPLOADS, SO ONLY ONE ROUTE.
