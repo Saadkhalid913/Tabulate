@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose")
 const upload = require("express-fileupload")
+const cors = require("cors")
 const bodyParser = require("body-parser")
 
 mongoose.connect("mongodb://localhost:27017/tabulate")
@@ -18,8 +19,9 @@ const postRouter = require("./server/api/routes/posts")
 
 const app = express()
 
-app.use(upload())
+app.use(cors({ origin: "*" }))
 app.use(express.json())
+app.use(upload())
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/users", userRouter)
