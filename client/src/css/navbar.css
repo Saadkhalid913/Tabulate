@@ -1,0 +1,13 @@
+:root {
+  --purple-main: #735CDD;
+  --black-main: #1C1C1C;
+  --grey-main: #343434;
+}
+
+.navbar {
+  background-color: var(--grey-main);
+  width:100%;
+  height: 8vh;
+  display:flex;
+}
+
