@@ -4,6 +4,7 @@ const router = express.Router();
 const auth = require("../middlewear/auth-user")
 
 const viewPath = path.join(__dirname + "../" + "../" + "../", "../" + "/client/src/")
+const staticPath = path.join(__dirname + "../" + "../" + "../", "../" + "/client/public/")
 
 
 // HTML 
@@ -43,5 +44,10 @@ router.get("/css/:filename", (req, res) => {
 router.get("/js/:filename", (req, res) => {
   res.sendFile(viewPath + "js/" + req.params.filename)
 })
+
+
+// STATIC
+
+router.get("/public/:filename", (req, res) => res.sendFile(staticPath + req.params.filename))
 
 module.exports = router

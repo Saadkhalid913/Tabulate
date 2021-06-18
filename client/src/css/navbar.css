@@ -9,5 +9,15 @@
   width:100%;
   height: 8vh;
   display:flex;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+.navbar a {
+  display: block;
+}
+
+.navbar a img {
+  height: 100%;
 }
 

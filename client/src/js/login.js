@@ -33,13 +33,6 @@ async function SubmitLogin() {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ "user_auth_token": localStorage.getItem("user_auth_token") })
   }).then(r => window.location = r.url).catch(err => console.log(err))
-
-
-
-
-
-
-
 }
 
 function InvalidLoginHandler() {
