@@ -22,19 +22,15 @@ router.get("/index", (req, res) => {
 
 
 // CSS 
-router.get("/css/main.css", (req, res) => {
-  res.sendFile(viewPath + "css/main.css")
+router.get("/css/:filename", (req, res) => {
+  res.sendFile(viewPath + "css/" + req.params.filename)
 })
-router.get("/css/navbar.css", (req, res) => {
-  res.sendFile(viewPath + "css/navbar.css")
-})
-
 
 
 // SCRIPTS 
 
-router.get("/js/login.js", (req, res) => {
-  res.sendFile(viewPath + "js/login.js")
+router.get("/js/:filename", (req, res) => {
+  res.sendFile(viewPath + "js/" + req.params.filename)
 })
 
 module.exports = router
