@@ -1,3 +1,5 @@
+
+
 function main() {
   const submitbutton = document.getElementById("btn-login-submit")
   submitbutton.addEventListener("click", SubmitLogin)
@@ -19,7 +21,24 @@ async function SubmitLogin() {
     body: JSON.stringify(login)
   })
 
-  console.log(await response.json())
+  const JsonResponse = await response.json()
+  if (JsonResponse.error) return InvalidResponseHandler(JsonResponse.error)
+
+  localStorage.setItem("user_auth_token", JsonResponse["auth-token"])
+
+
+  fetch("/dashboard", {
+    method: "post",
+    mode: "cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ "user_auth_token": localStorage.getItem("user_auth_token") })
+  }).then(r => window.location = r.url).catch(err => console.log(err))
+
+
+
+
+
+
 
 }
 
@@ -28,6 +47,10 @@ function InvalidLoginHandler() {
   const pwbox = document.getElementById("inp-password")
   emailbox.value = ""
   pwbox.value = ""
+}
+
+function InvalidResponseHandler(err) {
+  alert(err);
 }
 
 main()

@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path")
 const router = express.Router();
+const auth = require("../middlewear/auth-user")
 
 const viewPath = path.join(__dirname + "../" + "../" + "../", "../" + "/client/src/")
 
@@ -18,6 +19,16 @@ router.get("/login", (req, res) => {
 })
 router.get("/index", (req, res) => {
   res.sendFile(viewPath + "index.html")
+})
+
+router.get("/dashboard/:id", (req, res) => {
+  res.sendFile(viewPath + "dashboard.html")
+})
+
+router.post("/dashboard", auth, (req, res) => {
+  console.log("redirecting...")
+  const id = req._user._id;
+  res.redirect("/dashboard/" + id)
 })
 
 
