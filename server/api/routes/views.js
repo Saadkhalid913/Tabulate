@@ -10,6 +10,17 @@ router.get("/", (req, res) => {
   res.sendFile(viewPath + "Homepage.html")
 })
 
+router.get("/signup", (req, res) => {
+  res.sendFile(viewPath + "signup.html")
+})
+router.get("/login", (req, res) => {
+  res.sendFile(viewPath + "login.html")
+})
+router.get("/index", (req, res) => {
+  res.sendFile(viewPath + "index.html")
+})
+
+
 // CSS 
 router.get("/css/main.css", (req, res) => {
   res.sendFile(viewPath + "css/main.css")

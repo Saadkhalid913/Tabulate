@@ -28,8 +28,8 @@ app.use(upload())
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/", views)
-app.use("/users", userRouter)
-app.use("/posts", postRouter)
+app.use("/api/users", userRouter)
+app.use("/api/posts", postRouter)
 
 
 

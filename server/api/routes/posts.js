@@ -96,7 +96,6 @@ router.post("/uploadfiles/:id", auth, async (req, res) => {
   if (!id) return res.status(300).send({ error: "no id provided" });
   const post = await postModel.findById(id);
   if (!post) return res.status(300).send({ error: "no post by that id" });
-  // if (!post) return res.redirect("/posts/error/" + 1234);
   post.files = assetPaths;
   id = post._id
 
@@ -114,7 +113,7 @@ router.post("/uploadfiles/:id", auth, async (req, res) => {
   }
 })
 
-router.get("/error/:id",(req,res) => res.send({id: req.params.id}))
+router.get("/error/:id", (req, res) => res.send({ id: req.params.id }))
 
 
 
