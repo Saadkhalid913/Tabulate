@@ -29,7 +29,12 @@ router.get("/css/navbar.css", (req, res) => {
   res.sendFile(viewPath + "css/navbar.css")
 })
 
+
+
 // SCRIPTS 
 
+router.get("/js/login.js", (req, res) => {
+  res.sendFile(viewPath + "js/login.js")
+})
 
 module.exports = router
