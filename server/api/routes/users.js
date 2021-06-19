@@ -48,7 +48,7 @@ router.post("/login", async (req, res) => {
 router.post("/me", auth, async (req, res) => {
   const id = req._user._id
   const user = await userModel.findById(id);
-  return res.send(_.pick(user, ["email", "first_name", "last_name", "posts"]))
+  return res.send(_.pick(user, ["email", "first_name", "last_name", "posts", "_id"]))
 })
 
 

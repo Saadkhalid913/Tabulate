@@ -113,7 +113,12 @@ router.post("/uploadfiles/:id", auth, async (req, res) => {
   }
 })
 
-router.get("/error/:id", (req, res) => res.send({ id: req.params.id }))
+router.get("/files/:postid/:filename", (req, res) => {
+  const postid = req.params.postid;
+  const filename = req.params.filename;
+  const assetPath = path.join(__dirname, "../", "../", "/assets/");
+  res.sendFile(assetPath + filename);
+})
 
 
 
