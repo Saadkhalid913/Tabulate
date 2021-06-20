@@ -13,7 +13,7 @@ async function AuthUserFromBody(req, res, next) {
     next()
   }
   catch (err) {
-    res.send({ error: "Invalid credentials", log: err })
+    res.status(401).send({ error: "Invalid credentials", log: err })
   }
 }
 

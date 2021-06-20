@@ -29,14 +29,6 @@
 </style>
 
 <script>
-  if (localStorage.getItem("user_auth_token")) {
-    fetch("/dashboard", {
-      method: "post",
-      mode: "cors",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({"user_auth_token": localStorage.getItem("user_auth_token")})
-}).then(r => window.location = r.url)
-  }
 </script>
 
 </html>

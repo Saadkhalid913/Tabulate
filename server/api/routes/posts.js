@@ -27,10 +27,13 @@ router.post("/upload", auth, async (req, res) => {
 
   try {
     const response = await post.save()
+    await userModel.findByIdAndUpdate(author, { $push: { posts: response._id } })
     res.send(response)
-
   }
-  catch (err) { return res.status(500).send({ error: "Internal server error", log: err }) }
+  catch (err) {
+    console.log(err)
+    return res.status(500).send({ error: "Internal server error", log: err })
+  }
 })
 
 router.get("/", async (req, res) => {

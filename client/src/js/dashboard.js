@@ -16,8 +16,6 @@ async function validateUser() {
   const token = localStorage.getItem("user_auth_token")
   const user_id = window.location.href.split("/").pop()
 
-
-
   const response = await fetch("/api/users/me", {
     method: "post",
     mode: "cors",
@@ -100,13 +98,6 @@ function GetFilesFromPopup() {
   form.append("user_auth_token", localStorage.getItem("user_auth_token"))
   return form
 }
-
-
-
-
-
-
-
 
 
 

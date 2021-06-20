@@ -10,7 +10,6 @@ const auth = require("../middlewear/auth-user")
 const router = express.Router()
 
 router.post("/signup", async (req, res) => {
-  console.log(req.body)
   const first_name = req.body.first_name
   const last_name = req.body.last_name
   const email = req.body.email
@@ -29,7 +28,6 @@ router.post("/signup", async (req, res) => {
 })
 
 router.post("/login", async (req, res) => {
-  console.log(req.body)
   const email = req.body.email
   const password = req.body.password;
 
