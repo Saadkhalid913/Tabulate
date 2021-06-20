@@ -5,7 +5,7 @@ const cors = require("cors")
 const bodyParser = require("body-parser")
 
 
-mongoose.connect("mongodb://localhost:27017/tabulate")
+mongoose.connect("mongodb://localhost:27017/tabulate", { useNewUrlParser: true, useUnifiedTopology: true })
 // startup
 
 //logging 
