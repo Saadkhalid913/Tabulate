@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken")
 const config = require("config")
 const auth = require("../middlewear/auth-user")
 const path = require("path")
+const fs = require("fs")
 
 
 // schemas 
@@ -17,16 +18,17 @@ const router = express.Router();
 router.post("/upload", auth, async (req, res) => {
   const author = [req._user._id];
   const title = req.body.post.title;
-
+  const tags = req.body.post.tags
 
   if (!title) return res.status(400).send({ error: "No title provided" })
 
 
-  const post = new postModel({ title, author })
+  const post = new postModel({ title, author, tags })
 
   try {
     const response = await post.save()
     res.send(response)
+
   }
   catch (err) { return res.status(500).send({ error: "Internal server error", log: err }) }
 })
@@ -66,6 +68,8 @@ router.put("/:id", auth, async (req, res) => {
 })
 
 router.post("/uploadfiles/:id", auth, async (req, res) => {
+
+
   if (!req.files) return res.status(400).send({ error: "No files provided" });
   assetPaths = []
   let files = [];
@@ -73,29 +77,34 @@ router.post("/uploadfiles/:id", auth, async (req, res) => {
   for (let f in req.files) {
     files.push(req.files[f])
   }
-  console.log("Files -------- ", files)
-
-  // if (!Array.isArray(files)) files = [files]
 
   const assetsDir = path.join(__dirname, "../", "../", "/assets/")
 
-  for (let file of files) {
-    if (!file) continue
-    filePath = assetsDir + file.name;
-    try {
-      file.mv(filePath)
-      assetPaths.push(filePath)
-    }
-    catch (err) {
-      res.status(501).send({ error: "Serverside Error", log: err })
-    }
-  }
+
 
   let id = req.params.id
-
   if (!id) return res.status(300).send({ error: "no id provided" });
   const post = await postModel.findById(id);
   if (!post) return res.status(300).send({ error: "no post by that id" });
+
+
+  for (let file of files) {
+    if (!file) continue
+    postdir = assetsDir + `${id}`;
+
+    if (!fs.existsSync(postdir))
+      fs.mkdir(assetsDir + `${id}/`, (err) => { if (err) console.log(err) })
+
+    try {
+      file.mv(postdir + "/" + file.name)
+      assetPaths.push(file.name)
+      console.log("Moved File! ", id)
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
   post.files = assetPaths;
   id = post._id
 
@@ -104,9 +113,7 @@ router.post("/uploadfiles/:id", auth, async (req, res) => {
     const user = await userModel.findById(req._user._id);
     if (!user) console.log("No user")
     user.posts.push(id)
-    console.log(await user.save())
-
-    return res.send(_.pick(response, ["_id", "author", "title"]));
+    return res.send(_.pick(response, ["_id", "author", "title", "files"]));
   }
   catch (err) {
     return res.status(500).send({ err: "Serverside error", log: err })

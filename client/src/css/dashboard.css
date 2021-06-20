@@ -67,6 +67,7 @@ button:hover{
 }
 
 .dashboard-add-post-popup {
+  transition-duration: 150ms;
   display:flex;
   flex-direction: column;
   align-items: center;
@@ -75,9 +76,11 @@ button:hover{
   z-index: 1;
   margin: 0 auto;
   width: 50%;
-  left: 25%;
+  left: -200%;
+  opacity: 0%;
   height: 60vh;
   bottom: 10vh;
+  border-radius: 16px;
 } 
 
 .dashboard-add-post-popup > div {
@@ -96,8 +99,11 @@ button:hover{
   margin-top: 0.5rem;
   padding-left: 0.5rem;
   font-size: 1rem;
-  height: 2rem;
-
+  height: 2.5rem;
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+  outline: none;
 }
 
 
@@ -107,13 +113,15 @@ button:hover{
 
 #add-post-cancel {
   align-self: flex-end;
-  margin: 0.5rem;
+  margin: 0.75rem;
   width: 5vh;
   height: 5vh;
   border: 1px solid white;
   color: white;
   font-weight: 900;
   background-color: transparent;
+  border-radius: 100px;
+
 }
 #add-post-cancel:hover {
   transform: scale(1,1);
