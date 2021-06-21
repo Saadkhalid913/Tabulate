@@ -44,13 +44,17 @@ async function ToggleAddPostPopup() {
 
 
 function GetFieldsFromPopup() {
+  console.log("in function")
   const titleBox = document.getElementById("add-post-title")
   const tagsBox = document.getElementById("add-post-tags")
 
   const title = titleBox.value.trim()
   const tags = tagsBox.value.split(" ")
 
-  if (title.length < 12) return alert("Please enter a title longer than 12 characters")
+  if (title.length < 12 || !title) {
+    UserAlert("Please enter a title longer than 12 characters")
+    return
+  }
 
   if (!tagsBox.value) return { title }
   return { title, tags }
@@ -63,6 +67,7 @@ async function UploadPost() {
 
   const token = localStorage.getItem("user_auth_token")
   const fileForm = GetFilesFromPopup()
+  if (!fileForm) return UserAlert("Please add some files")
 
   const reqBody = {
     user_auth_token: token,
@@ -80,7 +85,6 @@ async function UploadPost() {
   const responseJson = await response.json()
   if (responseJson.error) return alert(responseJson.error)
 
-  if (!fileForm) return
   const uploadResponse = await fetch("/api/posts/uploadfiles/" + responseJson._id, {
     method: "post",
     mode: "cors",
@@ -115,7 +119,7 @@ async function RenderUserData(userData) {
 async function AddPostById(post_id) {
   const response = await fetch("/api/posts/" + post_id)
   const post = await response.json();
-  if (post.error) return alert(post.error)
+  if (post.error) return UserAlert(post.error)
   document.getElementById("post-grid").appendChild(CreatePostElement(post))
 }
 
@@ -143,9 +147,18 @@ function CreatePostElement(post) {
   return postElement
 }
 
+async function UserAlert(alert, color, duration = 2000) {
+  const RED = "#EF233C"
+  const GREEN = "#00A878"
+  const alertDiv = document.getElementById("user-alert")
+  alertDiv.style.backgroundColor = (!color) ? RED : GREEN;
+  alertDiv.innerText = alert
+  alertDiv.style.transform = "translate(0%, 0%)"
+
+  await setTimeout(() => { alertDiv.style.transform = "translate(0%, -100%)" }, duration)
+}
 
 function CreatePost() {
-
 }
 
 main()
