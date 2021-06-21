@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const upload = require("express-fileupload")
 const cors = require("cors")
 const bodyParser = require("body-parser")
+const config = require("config")
 
 const URI = config.get("URI")
 
