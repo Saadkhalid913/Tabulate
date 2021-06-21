@@ -36,5 +36,5 @@ app.use("/api/posts", postRouter)
 
 
 
-PORT = 3000
+PORT = process.env.PORT || 3000
 app.listen(PORT, () => console.log("Server is listening on port: " + PORT))
