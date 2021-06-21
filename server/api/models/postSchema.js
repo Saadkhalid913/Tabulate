@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 const config = require("config")
-const userSchema = require("./userSchema")
+// const userSchema = require("./userSchema")
 
 const postSchema = new mongoose.Schema({
   title: { type: String, minlength: 8, maxlength: 512, required: true, },
