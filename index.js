@@ -5,6 +5,11 @@ const upload = require("express-fileupload")
 const cors = require("cors")
 const bodyParser = require("body-parser")
 const config = require("config")
+const fs = require("fs");
+const path = require("path")
+
+if (!fs.existsSync(path.join(__dirname, "/server/assets")))
+  fs.mkdirSync(path.join(__dirname, "/server/assets"))
 
 const URI = config.get("URI")
 
