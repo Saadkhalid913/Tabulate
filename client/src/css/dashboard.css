@@ -145,3 +145,67 @@ button:hover{
   background-color: var(--active-purple);
 }
 
+.post-grid-wrapper {
+  color:white;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  border: 2px solid white;
+  margin-top: 8rem;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem
+  
+}
+
+.post-grid {
+  border: 2px solid white;
+  width:100%;
+  margin: 2rem;
+  display:grid;
+  grid-template-columns: 33% 33% 33%;
+}
+
+.post {
+  margin: 0 auto;
+  width: 90%;
+  background-color: var(--purple-main);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom:1.5rem;
+
+}
+.post > h3 {
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.tag-container {
+  display:flex;
+  width:100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+
+}
+
+.tag-container > p {
+  border-radius: 100px;
+  border: 1px solid white;
+  padding: 0.2rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  font-size: 1rem;
+  margin-right: 0.5rem;
+  background-color: var(--active-purple);
+}
+
+.post > h4 {
+  background-color: var(--active-purple);
+  width:100%;
+  text-align: center;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem;
+
+
+}
+

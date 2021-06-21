@@ -1,5 +1,6 @@
 function main() {
   const userData = validateUser()
+  RenderUserData(userData)
 
   document.getElementById("btn-dashboard-main-new-post").addEventListener("click", ToggleAddPostPopup)
   document.getElementById("add-post-cancel").addEventListener("click", ToggleAddPostPopup)
@@ -27,7 +28,6 @@ async function validateUser() {
   if (userData.error) return alert(userData.error)
 
   if (userData._id != user_id) return window.location = "/"
-
   return userData
 }
 
@@ -86,6 +86,7 @@ async function UploadPost() {
     body: fileForm
   })
   console.log(await uploadResponse.json())
+  window.location.reload()
 }
 
 function GetFilesFromPopup() {
@@ -99,8 +100,48 @@ function GetFilesFromPopup() {
   return form
 }
 
+async function RenderUserData(userData) {
+  const { email, first_name, last_name, _id: id, posts } = await userData
+  console.log({ email, first_name, last_name, id, posts })
+  document.getElementById("dashboard-greeting").innerText = `Good morning ${first_name}.`
+
+  for (let i = 0; i < posts.length; i++) AddPostById(posts[i])
+}
+
+async function AddPostById(post_id) {
+  const response = await fetch("/api/posts/" + post_id)
+  const post = await response.json();
+  if (post.error) return alert(post.error)
+  document.getElementById("post-grid").appendChild(CreatePostElement(post))
+}
+
+function CreatePostElement(post) {
+  console.log(post)
+  const postElement = document.createElement("div")
+  postElement.className = "post"
+  const title = document.createElement("h3")
+  title.innerText = post.title
+
+  const tagContainer = document.createElement("div")
+  tagContainer.className = "tag-container"
+
+  for (let i = 0; i < post.tags.length; i++) {
+    tagContainer.innerHTML += `<p>${post.tags[i]}</p>`
+  }
+
+  postElement.appendChild(title)
+  postElement.appendChild(tagContainer)
+
+  for (let i = 0; i < post.files.length; i++)
+    postElement.innerHTML += `<h4><a target = "_blank" href ="/api/posts/files/${post._id}/${post.files[i]}">${post.files[i]}</a></h4>`
+
+  console.log(postElement)
+  return postElement
+}
 
 
-// function CreatePost(){}
+function CreatePost() {
+
+}
 
 main()

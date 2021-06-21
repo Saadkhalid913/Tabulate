@@ -52,5 +52,4 @@ router.get("/js/:filename", (req, res) => {
 
 router.get("/public/:filename", (req, res) => res.sendFile(staticPath + req.params.filename))
 
-
 module.exports = router

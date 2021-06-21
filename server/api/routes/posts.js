@@ -41,6 +41,12 @@ router.get("/", async (req, res) => {
   return res.send(posts);
 })
 
+router.get("/:id", async (req, res) => {
+  const post = await postModel.findById(req.params.id);
+  if (!post) return res.send({ error: "No post by this id" })
+  res.send(post)
+})
+
 router.put("/:id", auth, async (req, res) => {
   // getting id of post and user 
   const user_id = req._user._id;
@@ -127,7 +133,7 @@ router.get("/files/:postid/:filename", (req, res) => {
   const postid = req.params.postid;
   const filename = req.params.filename;
   const assetPath = path.join(__dirname, "../", "../", "/assets/");
-  res.sendFile(assetPath + filename);
+  res.sendFile(assetPath + `${postid}/${filename}`);
 })
 
 
