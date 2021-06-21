@@ -4,8 +4,9 @@ const upload = require("express-fileupload")
 const cors = require("cors")
 const bodyParser = require("body-parser")
 
+const URI = config.get("URI")
 
-mongoose.connect("mongodb://localhost:27017/tabulate", { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
 // startup
 
 //logging 
