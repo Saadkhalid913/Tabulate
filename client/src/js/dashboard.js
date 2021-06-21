@@ -48,7 +48,7 @@ function GetFieldsFromPopup() {
   const tagsBox = document.getElementById("add-post-tags")
 
   const title = titleBox.value.trim()
-  const tags = tagsBox.value.split(",")
+  const tags = tagsBox.value.split(" ")
 
   if (title.length < 12) return alert("Please enter a title longer than 12 characters")
 
