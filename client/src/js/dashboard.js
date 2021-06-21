@@ -60,7 +60,9 @@ async function UploadPost() {
   let { title, tags } = GetFieldsFromPopup()
   if (!tags) tags = []
 
+
   const token = localStorage.getItem("user_auth_token")
+  const fileForm = GetFilesFromPopup()
 
   const reqBody = {
     user_auth_token: token,
@@ -78,7 +80,6 @@ async function UploadPost() {
   const responseJson = await response.json()
   if (responseJson.error) return alert(responseJson.error)
 
-  const fileForm = GetFilesFromPopup()
   if (!fileForm) return
   const uploadResponse = await fetch("/api/posts/uploadfiles/" + responseJson._id, {
     method: "post",
@@ -94,8 +95,11 @@ function GetFilesFromPopup() {
   if (filebox.files.length < 1) return null
   let form = new FormData()
 
-  for (let i in filebox.files)
-    form.append("File" + i, filebox.files[i])
+  for (let i in filebox.files) {
+    console.log(filebox.files[i].size)
+    if (filebox.files[i].size < 5000000)
+      form.append("File" + i, filebox.files[i])
+  }
   form.append("user_auth_token", localStorage.getItem("user_auth_token"))
   return form
 }

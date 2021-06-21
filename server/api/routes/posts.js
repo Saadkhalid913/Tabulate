@@ -77,7 +77,7 @@ router.put("/:id", auth, async (req, res) => {
 })
 
 router.post("/uploadfiles/:id", auth, async (req, res) => {
-
+  // TODO add file size validation and a quota for users 
 
   if (!req.files) return res.status(400).send({ error: "No files provided" });
   assetPaths = []
