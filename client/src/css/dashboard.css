@@ -32,15 +32,31 @@ button:hover{
   font-weight: 600;
 }
 
+@media only screen and (max-width: 900px) {
+  .greeting-wrapper p {
+    font-size: 3rem;
+    text-align: center;
+  }
+
+  .dashboard-main-buttons-wrapper  {
+    justify-content: center;
+  }
+
+}
+@media only screen and (max-width: 600px) {
+  .greeting-wrapper p {
+    font-size: 2rem;
+  }
+}
 .dashboard-main-buttons-wrapper {
   display:flex;
   padding-left: 3rem;
   flex-direction: row;
-
 }
 
+
 .dashboard-main-buttons-wrapper button {
-  width:11%;
+  width: max(20vh);
   margin-right: 3rem;
   height: 7vh;
   border-radius: 100px;
@@ -75,13 +91,14 @@ button:hover{
   position:fixed;
   z-index: 1;
   margin: 0 auto;
-  width: 50%;
+  width: 70%;
   left: -200%;
   opacity: 0%;
   height: 60vh;
   bottom: 10vh;
   border-radius: 16px;
 } 
+
 
 .dashboard-add-post-popup > div {
   display: flex;
@@ -110,8 +127,15 @@ button:hover{
 .dashboard-add-post-popup > div > label {
   font-size: 1.5rem;
   color:white;
-  
 }
+
+@media only screen and (max-width: 600px) {
+  .dashboard-add-post-popup > div > label {
+    font-size: 1.25rem;
+  }
+}
+
+
 
 #add-post-cancel {
   align-self: flex-end;
@@ -130,12 +154,11 @@ button:hover{
   background-color: var(--active-purple);
 }
 
-
 #add-post-submit {
   margin: 1rem;
   padding: 0.5rem;
   border-radius: 100px;
-  width: 12.5%;
+  width: max(12vh, 12.5%);
   height: 8.5%;
   color: white;
   font-weight: 600;
@@ -159,25 +182,51 @@ button:hover{
 }
 
 .post-grid {
-  
   width:100%;
   margin: 2rem;
   display:grid;
   grid-template-columns: 33% 33% 33%;
 }
 
+@media only screen and (max-width: 900px) {
+  .post-grid {
+    grid-template-columns: 50% 50%
+  }
+}
+@media only screen and (max-width: 648px) {
+  .post-grid {
+    grid-template-columns: 100%
+  }
+}
+
 .post {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   margin: 0 auto;
   width: 90%;
   background-color: var(--purple-main);
   border-radius: 16px;
   padding: 1.5rem;
   margin-bottom:1.5rem;
-
 }
 .post > h3 {
   font-weight: 400;
   margin-bottom: 1rem;
+}
+
+.post > button {
+  border-radius: 100px;
+  padding: 0.5rem;
+  margin-top: 0.75rem;
+  width: max(10vh, 30%);
+  outline: none;
+  border: 2px solid white;
+  font-weight: 500;
+  background-color: transparent;
+  color:white;
+  align-self: center;
+
 }
 
 .tag-container {

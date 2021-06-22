@@ -33,8 +33,8 @@ async function validateUser() {
 
 async function ToggleAddPostPopup() {
   const popup = document.getElementById("dashboard-add-post-popup")
-  if (!(popup.style.left == "25%") || popup.style.left == "-200%") {
-    popup.style.left = "25%"
+  if (!(popup.style.left == "15%") || popup.style.left == "-200%") {
+    popup.style.left = "15%"
     await setTimeout(() => { popup.style.opacity = "100%" }, 150)
     return
   }

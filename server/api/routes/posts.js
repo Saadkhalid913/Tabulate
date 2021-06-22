@@ -134,7 +134,7 @@ router.delete("/:id", auth, async (req, res) => {
   if (!post) return res.send({ message: "Deleted" })
 
   const directory = path.join(__dirname, "../", "../", "assets/" + post._id)
-  console.log(directory)
+  console.log("Deleted: ", directory)
 
   // removes directory by force 
   fs.promises.rmdir(directory, { recursive: true, force: true })

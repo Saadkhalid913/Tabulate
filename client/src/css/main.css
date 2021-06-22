@@ -50,9 +50,11 @@ body {
 
 @media only screen and (max-width:768px) {
   .login-wrapper {
-    width: 56vh;
+    width: 46vh;
+    height: 55%
   }
 }
+
 
 .login-btn-wrapper {
   height: 35%;
