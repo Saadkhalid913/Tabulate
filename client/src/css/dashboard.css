@@ -91,12 +91,14 @@ button:hover{
   position:fixed;
   z-index: 1;
   margin: 0 auto;
-  width: 70%;
+  width: 85%;
   left: -200%;
   opacity: 0%;
   height: 60vh;
   bottom: 10vh;
-  border-radius: 16px;
+  border-radius: 4px;
+
+  box-shadow: 0 0 12px 1px rgba(255, 255, 255, 0.541)
 } 
 
 
@@ -146,7 +148,7 @@ button:hover{
   color: white;
   font-weight: 900;
   background-color: transparent;
-  border-radius: 100px;
+  border-radius: 4px;
 
 }
 #add-post-cancel:hover {
