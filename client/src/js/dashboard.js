@@ -4,7 +4,7 @@ function main() {
 
   document.getElementById("btn-dashboard-main-new-post").addEventListener("click", ToggleAddPostPopup)
   document.getElementById("add-post-cancel").addEventListener("click", ToggleAddPostPopup)
-
+  document.getElementById("logout-link").addEventListener("click", () => { localStorage.removeItem("user_auth_token") })
   document.getElementById("add-post-submit").addEventListener("click", UploadPost)
 
 }

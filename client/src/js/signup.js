@@ -35,18 +35,18 @@ async function submitSignup() {
 
   console.log(JsonResponse)
   UserAlert("Signed up successfully", true)
-  clearInput()
+  clearInput(all = true)
 }
 
 function validateInput(email, password, first_name, last_name) {
   const emailValidationPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-
+  console.log(password.length < 8)
   if (!email.match(emailValidationPattern)) {
     UserAlert("Please enter a valid email")
     return false
   }
-  if (!password.length > 8) {
-    UserAlert("Please enter a valid email")
+  if (password.length < 8) {
+    UserAlert("Password must be at least 8 characters")
     return false
   }
 

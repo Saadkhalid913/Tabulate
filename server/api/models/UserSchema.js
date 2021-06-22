@@ -5,10 +5,10 @@ const jwt = require("jsonwebtoken")
 const emailValidationPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 const userSchema = new mongoose.Schema({
-  first_name: { type: String, required: true, minlength: 2, maxlength: 64 },
-  last_name: { type: String, required: true, minlength: 2, maxlength: 64 },
+  first_name: { type: String, lowercase: true, required: true, minlength: 2, maxlength: 64 },
+  last_name: { type: String, lowercase: true, required: true, minlength: 2, maxlength: 64 },
   email: {
-    type: String, required: true, minlength: 3, unique: false, maxlength: 255,
+    type: String, required: true, lowercase: true, minlength: 3, unique: false, maxlength: 255,
     match: emailValidationPattern
   },
   password: { type: String, maxlength: 512 },
