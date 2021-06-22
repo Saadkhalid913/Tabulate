@@ -143,7 +143,27 @@ function CreatePostElement(post) {
   for (let i = 0; i < post.files.length; i++)
     postElement.innerHTML += `<h4><a target = "_blank" href ="/api/posts/files/${post._id}/${post.files[i]}">${post.files[i]}</a></h4>`
 
-  console.log(postElement)
+  const DeleteButton = document.createElement("button")
+  DeleteButton.innerText = "Delete"
+
+  // Delete button function
+  DeleteButton.addEventListener("click", async () => {
+    const response = await fetch("/api/posts/" + post._id, {
+      method: "delete",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ "user_auth_token": localStorage.getItem("user_auth_token") })
+    })
+    const responseJson = await response.json()
+    if (responseJson.error) {
+      UserAlert(responseJson.error)
+      return
+    }
+    UserAlert(responseJson.message)
+    window.location.reload()
+  })
+
+  postElement.appendChild(DeleteButton)
   return postElement
 }
 

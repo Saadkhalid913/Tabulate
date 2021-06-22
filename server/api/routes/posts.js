@@ -129,6 +129,27 @@ router.post("/uploadfiles/:id", auth, async (req, res) => {
   }
 })
 
+router.delete("/:id", auth, async (req, res) => {
+  const post = await postModel.findByIdAndDelete(req.params.id)
+  if (!post) return res.send({ message: "Deleted" })
+
+  const directory = path.join(__dirname, "../", "../", "assets/" + post._id)
+  console.log(directory)
+
+  // removes directory by force 
+  fs.promises.rmdir(directory, { recursive: true, force: true })
+    .then(async () => {
+      // remove the post from the posts of the user 
+      const user = await userModel.findById(req._user._id)
+      user.posts.splice(user.posts.indexOf(post._id), 1)
+      await user.save()
+
+      // send message that post has been deleted
+      return res.send({ message: "Post Deleted" })
+    })
+    .catch(err => console.log(err))
+})
+
 router.get("/files/:postid/:filename", (req, res) => {
   const postid = req.params.postid;
   const filename = req.params.filename;
