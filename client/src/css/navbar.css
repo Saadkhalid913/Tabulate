@@ -4,6 +4,11 @@
   --grey-main: #343434;
 }
 
+body {
+  width: 100vw;
+  overflow-x: hidden;
+}
+
 .navbar {
   position: relative;
   justify-content: space-between;
