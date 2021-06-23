@@ -97,6 +97,7 @@ router.post("/uploadfiles/:id", auth, async (req, res) => {
   if (!post) return res.status(300).send({ error: "no post by that id" });
 
 
+  let storage_used = 0
   for (let file of files) {
     if (!file) continue
     postdir = assetsDir + `${id}`;
@@ -108,6 +109,8 @@ router.post("/uploadfiles/:id", auth, async (req, res) => {
       file.mv(postdir + "/" + file.name)
       assetPaths.push(file.name)
       console.log("Moved File! ", id)
+      storage_used += file.size
+      console.log("Storage: ", storage_used)
     }
     catch (err) {
       console.log(err)
@@ -119,9 +122,8 @@ router.post("/uploadfiles/:id", auth, async (req, res) => {
 
   try {
     const response = await post.save();
-    const user = await userModel.findById(req._user._id);
-    if (!user) console.log("No user")
-    user.posts.push(id)
+    await userModel.findByIdAndUpdate(req._user._id, { $inc: { quota: storage_used } })
+    
     return res.send(_.pick(response, ["_id", "author", "title", "files"]));
   }
   catch (err) {

@@ -13,7 +13,8 @@ const userSchema = new mongoose.Schema({
   },
   password: { type: String, maxlength: 512 },
   signup_date: { type: Date, default: new Date() },
-  posts: { type: [mongoose.Schema.Types.ObjectId] }
+  posts: { type: [mongoose.Schema.Types.ObjectId] },
+  quota: {type: Number, default: 0}
 })
 
 userSchema.methods.generateAuthToken = function () {
