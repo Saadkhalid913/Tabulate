@@ -11,6 +11,7 @@ const postSchema = new mongoose.Schema({
     required: true
   },
   files: { type: [String], required: true },
+  size: { type: Number, default: 0 },
   tags: { type: [String] }
 })
 

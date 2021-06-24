@@ -83,7 +83,7 @@ async function UploadPost() {
   })
 
   const responseJson = await response.json()
-  if (responseJson.error) return alert(responseJson.error)
+  if (responseJson.error) return UserAlert(responseJson.error)
 
   const uploadResponse = await fetch("/api/posts/uploadfiles/" + responseJson._id, {
     method: "post",

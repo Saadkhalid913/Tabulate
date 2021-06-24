@@ -16,6 +16,11 @@ const postModel = require("../models/models").postModel
 const router = express.Router();
 
 router.post("/upload", auth, async (req, res) => {
+
+  let user = await userModel.findById(req._user._id)
+  if (user.quota > 5000000) return res.send({ error: "You have used all upload quota!" })
+
+
   const author = [req._user._id];
   const title = req.body.post.title;
   const tags = req.body.post.tags
@@ -79,6 +84,9 @@ router.put("/:id", auth, async (req, res) => {
 router.post("/uploadfiles/:id", auth, async (req, res) => {
   // TODO add file size validation and a quota for users 
 
+
+
+
   if (!req.files) return res.status(400).send({ error: "No files provided" });
   assetPaths = []
   let files = [];
@@ -108,9 +116,8 @@ router.post("/uploadfiles/:id", auth, async (req, res) => {
     try {
       file.mv(postdir + "/" + file.name)
       assetPaths.push(file.name)
-      console.log("Moved File! ", id)
-      storage_used += file.size
-      console.log("Storage: ", storage_used)
+      await userModel.findByIdAndUpdate(req._user._id, { $inc: { quota: file.size } })
+      await postModel.findByIdAndUpdate(id, { $inc: { size: file.size } })
     }
     catch (err) {
       console.log(err)
@@ -122,8 +129,7 @@ router.post("/uploadfiles/:id", auth, async (req, res) => {
 
   try {
     const response = await post.save();
-    await userModel.findByIdAndUpdate(req._user._id, { $inc: { quota: storage_used } })
-    
+
     return res.send(_.pick(response, ["_id", "author", "title", "files"]));
   }
   catch (err) {
@@ -150,6 +156,8 @@ router.delete("/:id", auth, async (req, res) => {
       return res.send({ message: "Post Deleted" })
     })
     .catch(err => console.log(err))
+
+  await userModel.findByIdAndUpdate(req._user._id, { $inc: { quota: -post.size } })
 })
 
 router.get("/files/:postid/:filename", (req, res) => {
